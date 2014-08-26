@@ -40,6 +40,14 @@ transform (Lambda x (App e1 e2))    = App (App s (transform (Lambda x e1)))
 b = Lambda "x" (Lambda "y" (Lambda "z" (App (Var "x") (App (Var "y") (Var "z")))))
 c = Lambda "x" (Lambda "y" (Lambda "z" (App (Var "x") (App (Var "z") (Var "y"))) ))
 w = Lambda "x" (Lambda "y" (App (Var "x") (App (Var "y") (Var "y"))))
+m = Lambda "x" (App (Var "x") (Var "x"))
 
--- y =
+-- Fixed-point combinators
+--
+-- Y = \f.(\x.f(xx)) (\x.f(xx))
+y' = Lambda "x" (App (Var "f") (App (Var "x") (Var "x")))
+y = App (Lambda "f" y') y'
 
+-- X = \f.(\x.xx) (\x.f(xx))
+x' = Lambda "x" (App (Var "x") (Var "x"))
+x = App (Lambda "f" x') y'
